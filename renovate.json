@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+
+  "dependencyDashboard": true,
+  "timezone": "UTC",
+  "schedule": ["before 6am on monday"],
+
+  "labels": ["dependencies"],
+  "semanticCommits": "enabled",
+
+  "prConcurrentLimit": 4,
+  "prHourlyLimit": 2,
+
+  "packageRules": [
+    {
+      "description": "Group all dependencies across the entire repo (minor & patch)",
+      "matchManagers": ["npm", "pip", "bundler", "maven", "github-actions"],
+      "matchPaths": ["**/**"],  // Applies to all files and directories in the repo
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "All dependencies (minor & patch)",
+      "automerge": true
+    },
+    {
+      "description": "Separate major updates across all dependencies",
+      "matchManagers": ["npm", "pip", "bundler", "maven", "github-actions"],
+      "matchPaths": ["**/**"],  // Applies to all files and directories in the repo
+      "matchUpdateTypes": ["major"],
+      "groupName": "All dependencies (major)",
+      "automerge": false
+    }
+  ]
+}
